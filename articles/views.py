@@ -1,3 +1,11 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    from django.http import HttpResponse
+    return HttpResponse("Hello")
+
+
+def article(request, id):
+    # show the article
+    return
