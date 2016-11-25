@@ -1,4 +1,6 @@
 from django.db import models
+from easy_thumbnails.fields import ThumbnailerImageField
+from .managers import ArticleManager
 
 
 class Article(models.Model):
@@ -10,6 +12,11 @@ class Article(models.Model):
     # populate them from another table as a choice field?
     category = models.CharField(max_length=64)
     # use some 3rd party module or write custom save method to generate thumbs
-    hero_image = models.ImageField()
-    opt_image = models.ImageField()
+    hero_image = ThumbnailerImageField(upload_to="article/hero_imgs")
+    opt_image = models.ImageField(upload_to="article/opt_imgs", null=True, blank=True)
     content = models.TextField()
+
+    objects = ArticleManager()
+
+    def __str__(self):
+        return "<Article: {} - {}>".format(self.title, self.author)
