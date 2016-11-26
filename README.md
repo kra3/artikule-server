@@ -11,7 +11,10 @@ PS: preferred to set-up a virtualenv per project, but if you don't know how, fol
 
 ```
 pip install -r requirements.txt
+python manage.py createsuperuser  # give user name and password
 python manage.py runserver
 ```
 
 Now the server should be running at http://localhost:8000
+Open http://localhost:8000/admin
+go to article section and start adding articles
