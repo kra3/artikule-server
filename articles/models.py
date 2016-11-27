@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.db import models
-from easy_thumbnails.fields import ThumbnailerImageField
+from django.utils.formats import dateformat
 from .managers import ArticleManager
 
 
@@ -15,7 +15,7 @@ class Article(models.Model):
     # populate them from another table as a choice field?
     category = models.CharField(max_length=64)
     # use some 3rd party module or write custom save method to generate thumbs
-    hero_image = ThumbnailerImageField(upload_to="article/hero_imgs")
+    hero_image = models.ImageField(upload_to="article/hero_imgs")
     opt_image = models.ImageField(upload_to="article/opt_imgs", null=True, blank=True)
     content = models.TextField()
 
@@ -55,7 +55,7 @@ class Article(models.Model):
             'pk': self.pk,
             'title': self.title,
             'author': self.author,
-            'publication_date': self.publication_date,
+            'publication_date': dateformat.format(self.publication_date, 'r'),
             'category': self.category,
             'hero_image': self.hero_image.url,
             'opt_image': self.opt_image.url if self.opt_image else '',

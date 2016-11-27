@@ -1,7 +1,5 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect, JsonResponse
-from django.urls import reverse
-from django.views import generic
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 from django.views.decorators.http import require_safe
 
 from .models import Article
@@ -26,3 +24,9 @@ def featured_article(request):
 def articles(request):
     articles = Article.objects.all()
     return JsonResponse(dict(articles=[article.as_json for article in articles]))
+
+
+@require_safe
+def article(request, id):
+    article = get_object_or_404(Article, id=id)
+    return JsonResponse(article.as_json)
